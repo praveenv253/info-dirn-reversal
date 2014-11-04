@@ -50,11 +50,13 @@ class AutoRegressor(object):
             self.y_memory[0] = y_t
         self.y = y_t
 
+
 def create_data(num_time_steps):
     tx = AutoRegressor(coeffs=np.array([0.5, 0.5]))
     rx = AutoRegressor(coeffs=np.array([0.5, ]), deps=np.array([[1, ]]))
     txdata = np.zeros(num_time_steps)
     rxdata = np.zeros(num_time_steps)
+
     for t in xrange(num_time_steps):
         txdata[t] = tx.y
         tx.step()
@@ -63,10 +65,32 @@ def create_data(num_time_steps):
 
     return txdata, rxdata
 
-if __name__ == '__main__':
-    txdata, rxdata = create_data(1000)
-    plt.plot(txdata)
-    plt.plot(rxdata)
-    plt.legend(('Tx', 'Rx'))
-    plt.show()
 
+def create_data_two_deps(num_time_steps):
+    tx = AutoRegressor(coeffs=np.array([0.5, 0.5]))
+    tx2 = AutoRegressor(coeffs=np.array([0.5, 0.5]))
+    rx = AutoRegressor(coeffs=np.array([0.5, ]), deps=np.array([[1, ], [1, ]]))
+    txdata = np.zeros(num_time_steps)
+    tx2data = np.zeros(num_time_steps)
+    rxdata = np.zeros(num_time_steps)
+
+    for t in xrange(num_time_steps):
+        txdata[t] = tx.y
+        tx.step()
+        tx2data[t] = tx2.y
+        tx2.step()
+        rxdata[t] = rx.y
+        rx.step(np.array([tx.y, tx2.y]))
+
+    return txdata, tx2data, rxdata
+
+
+if __name__ == '__main__':
+    #txdata, rxdata = create_data(1000)
+    txdata, tx2data, rxdata = create_data_two_deps(1000)
+    plt.plot(txdata)
+    plt.plot(tx2data)
+    plt.plot(rxdata)
+    #plt.legend(('Tx', 'Rx'))
+    plt.legend(('Tx', 'Tx2', 'Rx'))
+    plt.show()
