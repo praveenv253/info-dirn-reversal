@@ -9,7 +9,20 @@ class AutoRegressor(object):
         $$ y_t = \sum_{i=1}^{p}{\alpha_i y_{t-i}}
                  + \sum_{k=1}^{n}{ \sum_{j=0}^{q}{\beta^{(k)}_j x_{t-j}} }
                  + \epsilon_t $$
-    where epsilon is zero-mean gaussian noise of a given noise variance.
+    where \epsilon is zero-mean gaussian noise of a given noise variance.
+
+    Parameters
+    ----------
+    coeffs : np.ndarray
+        A one-dimensional numpy array of the coefficients \alpha_i.
+    deps : np.ndarray
+        A two-dimensional numpy array of dependency coefficients. Each row is a
+        different dependency. Column i contains the dependency value at time
+        t - i.
+    noise_var : float
+        Variance of \epsilon.
+    init : float
+        Initial value of the regressor, y_0.
     """
 
     def __init__(self, coeffs=np.empty(0), deps=np.empty((0, 0)), noise_var=1,
