@@ -34,7 +34,7 @@ class AutoRegressor(object):
         self.deps_memory = np.zeros(deps.shape)
         self.noise_std = np.sqrt(noise_var)
 
-    def step(self, dep_values=np.empty((0, 0))):
+    def step(self, dep_values=np.empty(0)):
         # Find new value of y_t from y alone
         y_t = (np.dot(self.coeffs, self.y_memory)
                + np.random.normal(scale=self.noise_std))
@@ -42,7 +42,7 @@ class AutoRegressor(object):
         if self.deps_memory.size:
             # First update the dependency memory with the new dependency values
             self.deps_memory[:, 1:] = self.deps_memory[:, :-1]
-            self.deps_memory[:, 0] = dep_values[:, np.newaxis]
+            self.deps_memory[:, 0] = dep_values
         y_t += np.sum(self.deps * self.deps_memory)
         # Update y's memory
         if self.y_memory.size:
