@@ -52,6 +52,7 @@ class AutoRegressor(object):
 
 
 def create_data(num_time_steps):
+    """Create data with a tx and rx autoregressor"""
     tx = AutoRegressor(coeffs=np.array([0.5, 0.5]))
     rx = AutoRegressor(coeffs=np.array([0.5, ]), deps=np.array([[1, ]]))
     txdata = np.zeros(num_time_steps)
@@ -67,6 +68,7 @@ def create_data(num_time_steps):
 
 
 def create_data_two_deps(num_time_steps):
+    """Create data with two tx ARs and one rx AR."""
     tx = AutoRegressor(coeffs=np.array([0.5, 0.5]))
     tx2 = AutoRegressor(coeffs=np.array([0.5, 0.5]))
     rx = AutoRegressor(coeffs=np.array([0.5, ]), deps=np.array([[1, ], [1, ]]))
@@ -85,6 +87,8 @@ def create_data_two_deps(num_time_steps):
     return txdata, tx2data, rxdata
 
 
+# This is just something to test this module with. The real program should be
+# in another file
 if __name__ == '__main__':
     #txdata, rxdata = create_data(1000)
     txdata, tx2data, rxdata = create_data_two_deps(1000)
