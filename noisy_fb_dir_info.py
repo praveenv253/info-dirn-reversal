@@ -4,11 +4,17 @@ import numpy as np
 
 
 def dir_info_fwd(var_theta, var_n, var_r, n):
-    dir_info_1 = 0.5 * np.log2(var_theta / var_n + 1)
-    dir_info_rest = 0.5 * np.log2( (1 + var_r / var_n)
-                                   * (n*var_theta + var_n + var_r)
-                                   / var_n / (var_theta + var_n + var_r) )
-    return dir_info_1 + dir_info_rest
+    dir_info = 0
+
+    for i in range(1, n+1):
+        if i == 1:
+            dir_info += 0.5 * np.log(1 + var_theta / var_n)
+        else:
+            var_bar = var_theta + var_n/(i-1) + (i-2)*var_r/(i-1)**2
+            dir_info += 0.5 * np.log( (var_theta + var_r + var_n
+                                       - var_theta**2 / var_bar) / var_n )
+
+    return dir_info
 
 
 def dir_info_rev(var_theta, var_n, var_r, n):
