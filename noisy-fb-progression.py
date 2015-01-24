@@ -33,10 +33,13 @@ if __name__ == '__main__':
             fwd_directed_info[i, j] = dir_info_fwd(var_theta, var_n, var_r, n)
             rev_directed_info[i, j] = dir_info_rev(var_theta, var_n, var_r, n)
 
+    plt.figure()
+    ax = plt.gca()
+    ax.tick_params(axis='both', which='major', labelsize=14)
     for i in range(len(snrs)):
         cnum = cnums[i]
         plt.semilogx(n_vals, fwd_directed_info[:, i], color=blues(cnum))
-        plt.semilogx(n_vals, rev_directed_info[:, i], color=reds(cnum))
+    plt.semilogx(n_vals, rev_directed_info[:, -2], color=reds(cnums[-2]))
 
     # TODO Need to adjust the convergence criterion
     #for i in range(len(snrs)):
@@ -47,12 +50,16 @@ if __name__ == '__main__':
 
     plt.xlabel(r'Iterations ($n$)', fontsize=18)
     plt.ylabel(r'Directed information in bits', fontsize=18)
-    plt.title('Comparison of directed information flows in the\nSchalkwijk and'
-              ' Kailath scheme\n$\sigma_R^2/\sigma_N^2=%.2f$'
-              % rev_noise_ratio, fontsize=20)
-    plt.legend(('$SNR=0.25$, fwd', '$SNR=0.25$, rev',
-                '$SNR=0.5$, fwd', '$SNR=0.5$, rev',
-                '$SNR=1$, fwd', '$SNR=1$, rev'), loc='upper left')
+    plt.title('Comparison of directed information flows in the\n'
+              'Schalkwijk and Kailath scheme\n'
+              '$\sigma_R^2/\sigma_N^2=%.2f$' % rev_noise_ratio, fontsize=20)
+    #plt.legend(('$SNR=0.25$, fwd', '$SNR=0.25$, rev',
+    #            '$SNR=0.5$, fwd', '$SNR=0.5$, rev',
+    #            '$SNR=1$, fwd', '$SNR=1$, rev'), loc='upper left')
+    plt.legend((r'$\sigma_\theta^2/\sigma_N^2=0.25$, Tx to Rx',
+                r'$\sigma_\theta^2/\sigma_N^2=0.5$, Tx to Rx',
+                r'$\sigma_\theta^2/\sigma_N^2=1$, Tx to Rx',
+                r'Dir. info. from Rx to Tx'), loc='upper left')
     plt.tight_layout()
 
     plt.show()
