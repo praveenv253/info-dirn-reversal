@@ -10,7 +10,7 @@ if __name__ == '__main__':
     snrs = np.array([0.25, 0.5, 1])
     sigma_n = np.ones(snrs.size)
     sigma_theta = snrs
-    rev_noise_ratio = 0.35
+    rev_noise_ratio = 0.20
     sigma_r = rev_noise_ratio * sigma_n
 
     blues = plt.get_cmap('Blues')
@@ -45,14 +45,14 @@ if __name__ == '__main__':
 
     plt.xlabel(r'Iterations ($n$)', fontsize=18)
     plt.ylabel(r'Directed information in bits', fontsize=18)
-    ax.text(0.05, 0.95, '$\sigma_R^2/\sigma_N^2=%.2f$' % rev_noise_ratio,
+    ax.text(0.73, 0.1, '$\sigma_R^2/\sigma_N^2=%.2f$' % rev_noise_ratio,
             verticalalignment='top', horizontalalignment='left',
             transform=ax.transAxes, fontsize=20)
-    #plt.legend((r'$\sigma_\theta^2/\sigma_N^2=0.25$, Tx to Rx',
-    #            r'$\sigma_\theta^2/\sigma_N^2=0.5$, Tx to Rx',
-    #            r'$\sigma_\theta^2/\sigma_N^2=1$, Tx to Rx',
-    #            r'Dir. info. from Rx to Tx for all $\sigma_\theta^2$'),
-    #           loc='upper left')
+    plt.legend((r'$\sigma_\theta^2/\sigma_N^2=0.25$, Tx to Rx',
+                r'$\sigma_\theta^2/\sigma_N^2=0.5$, Tx to Rx',
+                r'$\sigma_\theta^2/\sigma_N^2=1$, Tx to Rx',
+                r'All $\sigma_\theta^2$, Rx to Tx'),
+               loc='upper left')
     plt.tight_layout()
 
     plt.show()
