@@ -62,5 +62,5 @@ if __name__ == '__main__':
     plt.title('Evolution of $X_i$ and $\hat{\Theta}_i$\nError is 2-$\sigma$')
     plt.legend(('$X_i$', '$\Theta$', '$\hat{\Theta}_i$'))
     plt.xlabel('$i$')
-    plt.ylabel('$X$ or $\hat{\Theta}$')
+    plt.ylabel('$X_i$ or $\hat{\Theta}_i$')
     plt.show()
