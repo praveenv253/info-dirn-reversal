@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy.linalg import lstsq
 
+import scipy.io as io
+
 def compute_beta(var_N, var_epsilon, alpha_1, p):
     """
     Under an autoressive source model and an S&K feedback scheme for
@@ -144,10 +146,19 @@ def main():
     var_N = 1           # Reference noise level
     var_epsilon = 0.1   # Variance of the noise added to the autoregressor
     alpha_1 = 0.9       # Memory term / "fading" of the autoregressor
-    p = 20              # Number of regression coefficients
+    p = 5               # Number of regression coefficients
 
     beta = compute_beta(var_N, var_epsilon, alpha_1, p)
     theta, x, y, theta_hat = generate_data(var_N, var_epsilon, alpha_1, beta)
+
+    num_trials = 10
+    num_iter = 1000
+    xthetas = np.empty((2, num_iter, num_trials))
+    for i in range(10):
+        params = generate_data(var_N, var_epsilon, alpha_1, beta, num_iter)
+        xthetas[0, :, i] = params[1] # X
+        xthetas[1, :, i] = params[3] # Theta_hat
+    io.savemat('xthetas', {'X': xthetas})
 
     plt.semilogy(beta)
     plt.show()
