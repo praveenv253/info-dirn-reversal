@@ -154,7 +154,7 @@ def main():
     num_trials = 10
     num_iter = 1000
     xthetas = np.empty((2, num_iter, num_trials))
-    for i in range(10):
+    for i in range(num_trials):
         params = generate_data(var_N, var_epsilon, alpha_1, beta, num_iter)
         xthetas[0, :, i] = params[1] # X
         xthetas[1, :, i] = params[3] # Theta_hat
