@@ -35,44 +35,44 @@ if __name__ == '__main__':
 
     plt.figure()
     ax = plt.gca()
-    ax.tick_params(axis='both', which='major', labelsize=14)
+    ax.tick_params(axis='both', which='major', labelsize=18)
     for i in range(len(snrs)):
         cnum = cnums[i]
         plt.semilogx(n_vals, fwd_directed_info[:, i], color=blues(cnum),
-                     linewidth=2)
+                     linewidth=3)
     plt.semilogx(n_vals, rev_directed_info[:, -2], color=reds(cnums[-2]),
-                 linewidth=2)
+                 linewidth=3)
 
-    plt.xlabel(r'Iterations ($n$)', fontsize=18)
-    plt.ylabel(r'Log Granger-causality index', fontsize=18)
-    ax.text(0.73, 0.1, '$\sigma_R^2/\sigma_N^2=%.2f$' % rev_noise_ratio,
+    plt.xlabel(r'Iterations ($n$)', fontsize=22)
+    plt.ylabel(r'Log Granger-causality index', fontsize=22)
+    ax.text(0.7, 0.1, '$\sigma_R^2/\sigma_N^2=%.2f$' % rev_noise_ratio,
             verticalalignment='top', horizontalalignment='left',
-            transform=ax.transAxes, fontsize=20)
+            transform=ax.transAxes, fontsize=22)
     #plt.legend((r'$\sigma_\theta^2/\sigma_N^2=0.25$, Tx to Rx',
     #            r'$\sigma_\theta^2/\sigma_N^2=0.5$, Tx to Rx',
     #            r'$\sigma_\theta^2/\sigma_N^2=1$, Tx to Rx',
     #            r'All $\sigma_\theta^2$, Rx to Tx'),
     #           loc='upper left')
 
-    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=0.25$, Tx to Rx', fontsize=16,
+    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=0.25$, Fwd', fontsize=20,
                 xy=(n_vals[8], fwd_directed_info[8, 0]), xytext=(0.15, 0.8),
                 textcoords='axes fraction',
-                arrowprops=dict(arrowstyle='->',
+                arrowprops=dict(arrowstyle='->', linewidth=2,
                     connectionstyle='angle,angleA=0,angleB=-40,rad=30'))
-    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=0.5$, Tx to Rx', fontsize=16,
+    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=0.5$, Fwd', fontsize=20,
                 xy=(n_vals[7], fwd_directed_info[7, 1]), xytext=(0.11, 0.7),
                 textcoords='axes fraction',
-                arrowprops=dict(arrowstyle='->',
+                arrowprops=dict(arrowstyle='->', linewidth=2,
                     connectionstyle='angle,angleA=0,angleB=-40,rad=30'))
-    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=1$, Tx to Rx', fontsize=16,
+    ax.annotate(r'$\sigma_\theta^2/\sigma_N^2=1$, Fwd', fontsize=20,
                 xy=(n_vals[6], fwd_directed_info[6, 2]), xytext=(0.07, 0.6),
                 textcoords='axes fraction',
-                arrowprops=dict(arrowstyle='->',
+                arrowprops=dict(arrowstyle='->', linewidth=2,
                     connectionstyle='angle,angleA=0,angleB=-40,rad=30'))
-    ax.annotate(r'All $\sigma_\theta^2$, Rx to Tx', fontsize=16,
+    ax.annotate(r'All $\sigma_\theta^2$, Rev', fontsize=20,
                 xy=(n_vals[4], rev_directed_info[4, -2]), xytext=(0.03, 0.5),
                 textcoords='axes fraction',
-                arrowprops=dict(arrowstyle='->',
+                arrowprops=dict(arrowstyle='->', linewidth=2,
                     connectionstyle='angle,angleA=0,angleB=-40,rad=30'))
 
     plt.tight_layout()
