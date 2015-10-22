@@ -116,7 +116,9 @@ def generate_data(var_N, var_epsilon, alpha_1, beta, num_iter=100):
     for i in range(num_iter):
         if i == 0:
             # Initialize theta_1 as Normal(0, sigma_theta^2)
-            theta[i] = np.random.normal(scale=np.sqrt(var_theta))
+            #theta[i] = np.random.normal(scale=np.sqrt(var_theta))
+            # Initialize theta_1 as sigma_theta
+            theta[i] = np.sqrt(var_theta)
             # The first transmission is simply x = theta_1
             x[i] = theta[i]
         else:
@@ -143,10 +145,17 @@ def generate_data(var_N, var_epsilon, alpha_1, beta, num_iter=100):
 
 def main():
     # Model parameters
+    # There are a number of effects at play here. We require var_theta < var_N,
+    # so that there is something to estimate. But we also require
+    # var_epsilon < var_theta, so that theta is evolving slowly. The alpha_1
+    # should automatically adjust to reflect this and should not be an issue.
     var_N = 1           # Reference noise level
-    var_epsilon = 0.1   # Variance of the noise added to the autoregressor
-    alpha_1 = 0.9       # Memory term / "fading" of the autoregressor
-    p = 5               # Number of regression coefficients
+    var_epsilon = 0.10  # Variance of the noise added to the autoregressor
+    var_theta = 0.5     # Variance of theta
+    alpha_1 = np.sqrt(1 - var_epsilon / var_theta)
+    #alpha_1 = 0.9       # Memory term / "fading" of the autoregressor
+
+    p = 20              # Number of regression coefficients
 
     beta = compute_beta(var_N, var_epsilon, alpha_1, p)
     theta, x, y, theta_hat = generate_data(var_N, var_epsilon, alpha_1, beta)
